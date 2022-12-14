@@ -12,8 +12,8 @@ datasource db {
 
 model User {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  email      String    @unique
   name       String
+  email      String    @unique
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   comments   Comment[]
@@ -26,8 +26,8 @@ model User {
 
 model Company {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  email      String    @unique
   name       String
+  email      String    @unique
   address    String
   telephone  Int
   created_at DateTime  @default(now())
