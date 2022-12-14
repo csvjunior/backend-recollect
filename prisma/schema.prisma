@@ -14,11 +14,19 @@ model User {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   name       String
   email      String    @unique
+  address    Address
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   comments   Comment[]
 
   @@map("users")
+}
+
+type Address {
+  street String
+  city   String
+  state  String
+  zip    String
 }
 
 // Comments contain a comment string and connect back to the post.
@@ -28,13 +36,17 @@ model Company {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   name       String
   email      String    @unique
-  address    String
-  telephone  Int
+  address    Address
+  telephone  Telephone
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   comments   Comment[]
 
   @@map("companys")
+}
+
+type Telephone {
+  number Int
 }
 
 model Comment {
