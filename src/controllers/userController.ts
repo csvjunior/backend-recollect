@@ -11,7 +11,7 @@ app.get("/", async (req: Request, res: Response) => {
 
 app.post("/", async (req: Request, res: Response) => {
     const { name, email } = req.body;
-    const user = await prisma.user.create({data: {name, email}});
+    const user = await prisma.user.create({data: {name, email} });
     return res.json({ user });
 });
 app.get("/get-all", async (req: Request, res: Response) => {

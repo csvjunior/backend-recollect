@@ -6,7 +6,8 @@ const app = express();
 app.use(express.json());
 
 app.post("/", async (req: Request, res: Response) => {
-  const { name, email, address, telephone } = req.body;
-  const company = await prisma.user.create({ data: { name, email } });
+  const { name, email, password, address, phone } = req.body;
+  const company = await prisma.company.create({ data: { name, email, password, address, phone } });
   return res.json({ company });
 });
+

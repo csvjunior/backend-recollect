@@ -12,21 +12,13 @@ datasource db {
 
 model User {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
+  name       String?
   email      String    @unique
-  address    Address
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   comments   Comment[]
 
   @@map("users")
-}
-
-type Address {
-  street String
-  city   String
-  state  String
-  zip    String
 }
 
 // Comments contain a comment string and connect back to the post.
@@ -36,18 +28,23 @@ model Company {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
   name       String
   email      String    @unique
+  password   String
   address    Address
-  telephone  Telephone
+  phone      Int
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   comments   Comment[]
 
-  @@map("companys")
+  @@map("companies")
 }
 
-type Telephone {
-  number Int
+type Address {
+  street String
+  city   String
+  state  String
+  zip    String
 }
+
 
 model Comment {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
