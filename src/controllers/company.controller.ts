@@ -8,13 +8,14 @@ const app = express();
 app.use(express.json());
 
 app.post("/", async (req: Request, res: Response) => {
-  const { name, email, password, address, telephone } = req.body;
+  const { name, email, password, address, phone } = req.body;
   const company = await prisma.company.create({ 
     data: { 
         name, 
-        email, 
+        email,
+        password, 
         address,
-        telephone 
+        phone 
       }, 
     });
 
@@ -41,21 +42,22 @@ class CompanyController {
     });
 
     if (!company) {
-      return res.status(404).json({ error: "Empresa não encontrada!." });
+      return res.status(404).json({ error: "Empresa não encontrada!" });
     }
 
     return res.json(company).status(200);
   }
 
   public async create(req: Request, res: Response) {
-    const { name, email, address, telephone } = req.body;
+    const { name, email, password, address, phone } = req.body;
 
     const company = await prisma.company.create({
       data: {
-        address,
-        email,
         name,
-        telephone
+        email,
+        password,
+        address,
+        phone
       },
     });
 

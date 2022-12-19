@@ -27,11 +27,12 @@ class CommentController {
   }
 
   public async create(req: Request, res: Response) {
-    const { name, email, address } = req.body;
+    const { name, email } = req.body;
 
     const comment = await prisma.comment.create({
       data: {
-        email,
+        name,
+        email
       },
     });
 
@@ -40,7 +41,7 @@ class CommentController {
 
   public async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, email, address } = req.body;
+    const { name, email } = req.body;
 
     const comment = await prisma.comment.findFirst({
       where: {
