@@ -27,12 +27,13 @@ class CommentController {
   }
 
   public async create(req: Request, res: Response) {
-    const { name, email } = req.body;
+    const { name, email, comment, company_id } = req.body;
 
-    const comment = await prisma.comment.create({
+    const createComment = await prisma.comment.create({
       data: {
-        name,
-        email
+        author: { connect: { email } },
+        company: { connect: { id: company_id } },
+        comment,
       },
     });
 
@@ -41,26 +42,26 @@ class CommentController {
 
   public async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, email } = req.body;
+    const { comment } = req.body;
 
-    const comment = await prisma.comment.findFirst({
+    const findComment = await prisma.comment.findFirst({
       where: {
         id,
       },
     });
 
-    if (!comment) {
+    if (!findComment) {
       return res.status(404).json({ error: "Mensagem não encontrada!." });
     }
 
-    const updatedcomment = await prisma.comment.update({
+    const updatedComment = await prisma.comment.update({
       data: {
-        name,
+       comment
       },
       where: { id },
     });
 
-    res.json(updatedcomment).status(200);
+    res.json(updatedComment).status(200);
   }
 
   public async delete(req: Request, res: Response) {
