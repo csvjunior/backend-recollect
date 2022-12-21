@@ -83,7 +83,7 @@ class CommentController {
       },
     });
 
-    return res.send().status(204);
+    return res.sendStatus(204);
   }
 }
 
