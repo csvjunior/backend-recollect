@@ -66,7 +66,7 @@ class CompanyController {
 
   public async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, email, address } = req.body;
+    const { name, password, address, phone } = req.body;
 
 
     const company = await prisma.company.findFirst({
@@ -83,9 +83,10 @@ class CompanyController {
 
     const updatedCompany = await prisma.company.update({
       data: {
-        address,
-        email,
         name,
+        password,
+        address,
+        phone
       },
       where: { id },
     });
