@@ -83,16 +83,15 @@ var UserController = /** @class */ (function () {
     };
     UserController.prototype.create = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, name, email, address, user;
+            var _a, name, email, user;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _a = req.body, name = _a.name, email = _a.email, address = _a.address;
+                        _a = req.body, name = _a.name, email = _a.email;
                         return [4 /*yield*/, database_1["default"].user.create({
                                 data: {
-                                    address: address,
-                                    email: email,
-                                    name: name
+                                    name: name,
+                                    email: email
                                 }
                             })];
                     case 1:
@@ -104,12 +103,12 @@ var UserController = /** @class */ (function () {
     };
     UserController.prototype.update = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, _a, name, email, address, user, updatedUser;
+            var id, _a, name, email, user, updatedUser;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         id = req.params.id;
-                        _a = req.body, name = _a.name, email = _a.email, address = _a.address;
+                        _a = req.body, name = _a.name, email = _a.email;
                         return [4 /*yield*/, database_1["default"].user.findFirst({
                                 where: {
                                     id: id
@@ -122,9 +121,8 @@ var UserController = /** @class */ (function () {
                         }
                         return [4 /*yield*/, database_1["default"].user.update({
                                 data: {
-                                    address: address,
-                                    email: email,
-                                    name: name
+                                    name: name,
+                                    email: email
                                 },
                                 where: { id: id }
                             })];
@@ -160,7 +158,7 @@ var UserController = /** @class */ (function () {
                             })];
                     case 2:
                         _a.sent();
-                        return [2 /*return*/, res.send().status(204)];
+                        return [2 /*return*/, res.sendStatus(204)];
                 }
             });
         });

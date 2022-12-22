@@ -83,18 +83,20 @@ var CommentController = /** @class */ (function () {
     };
     CommentController.prototype.create = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, name, email, address, comment;
+            var _a, name, email, comment, company_id, createComment;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _a = req.body, name = _a.name, email = _a.email, address = _a.address;
+                        _a = req.body, name = _a.name, email = _a.email, comment = _a.comment, company_id = _a.company_id;
                         return [4 /*yield*/, database_1["default"].comment.create({
                                 data: {
-                                    email: email
+                                    author: { connect: { email: email } },
+                                    company: { connect: { id: company_id } },
+                                    comment: comment
                                 }
                             })];
                     case 1:
-                        comment = _b.sent();
+                        createComment = _b.sent();
                         return [2 /*return*/, res.json(comment).status(201)];
                 }
             });
@@ -102,31 +104,31 @@ var CommentController = /** @class */ (function () {
     };
     CommentController.prototype.update = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, _a, name, email, address, comment, updatedcomment;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var id, comment, findComment, updatedComment;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
                         id = req.params.id;
-                        _a = req.body, name = _a.name, email = _a.email, address = _a.address;
+                        comment = req.body.comment;
                         return [4 /*yield*/, database_1["default"].comment.findFirst({
                                 where: {
                                     id: id
                                 }
                             })];
                     case 1:
-                        comment = _b.sent();
-                        if (!comment) {
+                        findComment = _a.sent();
+                        if (!findComment) {
                             return [2 /*return*/, res.status(404).json({ error: "Mensagem não encontrada!." })];
                         }
                         return [4 /*yield*/, database_1["default"].comment.update({
                                 data: {
-                                    name: name
+                                    comment: comment
                                 },
                                 where: { id: id }
                             })];
                     case 2:
-                        updatedcomment = _b.sent();
-                        res.json(updatedcomment).status(200);
+                        updatedComment = _a.sent();
+                        res.json(updatedComment).status(200);
                         return [2 /*return*/];
                 }
             });
@@ -156,7 +158,7 @@ var CommentController = /** @class */ (function () {
                             })];
                     case 2:
                         _a.sent();
-                        return [2 /*return*/, res.send().status(204)];
+                        return [2 /*return*/, res.sendStatus(204)];
                 }
             });
         });

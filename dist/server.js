@@ -78,7 +78,7 @@ function main() {
             app.use(routes_1["default"]);
             app.listen(3000, function () { return __awaiter(_this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
-                    console.log("\uD83D\uDE80 Service started and listening at: http://127.0.0.1:3000");
+                    console.log("\uD83D\uDE80 Service started and listening at: 3000");
                     return [2 /*return*/];
                 });
             }); });

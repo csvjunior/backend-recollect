@@ -29,10 +29,6 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-<<<<<<< HEAD
     "mongoose": "^6.8.0"
-=======
-    "jsonwebtoken": "^8.5.1"
->>>>>>> 0147f122129e121bde298586bd983bcaf8ccae6a
   }
 }

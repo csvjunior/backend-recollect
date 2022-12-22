@@ -3,10 +3,14 @@ import cors from "cors";
 import * as dotenv from "dotenv";
 import routes from "./routes";
 
+
 dotenv.config();
 
-async function main() {
+async function main(): Promise<void> {
+
   const app = express();
+  
+
   app.use(cors());
   app.use(express.json());
 

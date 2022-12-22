@@ -44,17 +44,18 @@ var express_1 = __importDefault(require("express"));
 var app = (0, express_1["default"])();
 app.use(express_1["default"].json());
 app.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name, email, password, address, telephone, company;
+    var _a, name, email, password, address, phone, company;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _a = req.body, name = _a.name, email = _a.email, password = _a.password, address = _a.address, telephone = _a.telephone;
+                _a = req.body, name = _a.name, email = _a.email, password = _a.password, address = _a.address, phone = _a.phone;
                 return [4 /*yield*/, database_1["default"].company.create({
                         data: {
                             name: name,
                             email: email,
+                            password: password,
                             address: address,
-                            telephone: telephone
+                            phone: phone
                         }
                     })];
             case 1:
@@ -97,7 +98,7 @@ var CompanyController = /** @class */ (function () {
                     case 1:
                         company = _a.sent();
                         if (!company) {
-                            return [2 /*return*/, res.status(404).json({ error: "Empresa não encontrada!." })];
+                            return [2 /*return*/, res.status(404).json({ error: "Empresa não encontrada!" })];
                         }
                         return [2 /*return*/, res.json(company).status(200)];
                 }
@@ -106,17 +107,18 @@ var CompanyController = /** @class */ (function () {
     };
     CompanyController.prototype.create = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, name, email, address, telephone, company;
+            var _a, name, email, password, address, phone, company;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _a = req.body, name = _a.name, email = _a.email, address = _a.address, telephone = _a.telephone;
+                        _a = req.body, name = _a.name, email = _a.email, password = _a.password, address = _a.address, phone = _a.phone;
                         return [4 /*yield*/, database_1["default"].company.create({
                                 data: {
-                                    address: address,
-                                    email: email,
                                     name: name,
-                                    telephone: telephone
+                                    email: email,
+                                    password: password,
+                                    address: address,
+                                    phone: phone
                                 }
                             })];
                     case 1:
@@ -128,12 +130,12 @@ var CompanyController = /** @class */ (function () {
     };
     CompanyController.prototype.update = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var id, _a, name, email, address, company, updatedCompany;
+            var id, _a, name, password, address, phone, company, updatedCompany;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         id = req.params.id;
-                        _a = req.body, name = _a.name, email = _a.email, address = _a.address;
+                        _a = req.body, name = _a.name, password = _a.password, address = _a.address, phone = _a.phone;
                         return [4 /*yield*/, database_1["default"].company.findFirst({
                                 where: {
                                     id: id
@@ -148,9 +150,10 @@ var CompanyController = /** @class */ (function () {
                         }
                         return [4 /*yield*/, database_1["default"].company.update({
                                 data: {
+                                    name: name,
+                                    password: password,
                                     address: address,
-                                    email: email,
-                                    name: name
+                                    phone: phone
                                 },
                                 where: { id: id }
                             })];
@@ -186,7 +189,7 @@ var CompanyController = /** @class */ (function () {
                             })];
                     case 2:
                         _a.sent();
-                        return [2 /*return*/, res.send().status(204)];
+                        return [2 /*return*/, res.sendStatus(204)];
                 }
             });
         });
