@@ -13,7 +13,7 @@ async function main() {
   app.use(routes);
 
   app.listen(3000, async () => {
-    console.log(`🚀 Service started and listening at: http://127.0.0.1:3000`);
+    console.log(`🚀 Service started and listening at: 3000`);
   });
 }
 
