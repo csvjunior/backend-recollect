@@ -28,13 +28,12 @@ class UserController {
   }
 
   public async create(req: Request, res: Response) {
-    const { name, email, address } = req.body;
+    const { name, email } = req.body;
 
     const user = await prisma.user.create({
       data: {
-        address,
-        email,
         name,
+        email
       },
     });
 
@@ -43,7 +42,7 @@ class UserController {
 
   public async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, email, address } = req.body;
+    const { name, email } = req.body;
 
 
     const user = await prisma.user.findFirst({
@@ -58,9 +57,8 @@ class UserController {
 
     const updatedUser = await prisma.user.update({
       data: {
-        address,
-        email,
         name,
+        email,
       },
       where: { id },
     });
@@ -87,7 +85,7 @@ class UserController {
       }
     })
 
-    return res.send().status(204);
+    return res.sendStatus(204);
   }
 }
 
