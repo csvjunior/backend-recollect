@@ -19,7 +19,7 @@ app.post("/", async (req: Request, res: Response) => {
       }, 
     });
 
-  return res.json({ company });
+  return res.json(company);
 });
 
 class CompanyController {
