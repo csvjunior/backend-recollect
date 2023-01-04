@@ -27,7 +27,7 @@ class CommentController {
   }
 
   public async create(req: Request, res: Response) {
-    const { name, email, comment, company_id } = req.body;
+    const { email, comment, company_id } = req.body;
 
     const createComment = await prisma.comment.create({
       data: {

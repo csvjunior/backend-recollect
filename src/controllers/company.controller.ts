@@ -1,6 +1,6 @@
+import  bcrypt  from 'bcryptjs';
 import { Request, Response } from "express";
 import prisma from "../database";
-
 import express from "express";
 
 
@@ -50,12 +50,13 @@ class CompanyController {
 
   public async create(req: Request, res: Response) {
     const { name, email, password, address, phone } = req.body;
+    const newPassword = bcrypt.hashSync(password, 10);
 
     const company = await prisma.company.create({
       data: {
         name,
         email,
-        password,
+        password: newPassword,
         address,
         phone
       },
@@ -67,6 +68,7 @@ class CompanyController {
   public async update(req: Request, res: Response) {
     const { id } = req.params;
     const { name, password, address, phone } = req.body;
+    const newPassword = bcrypt.hashSync(password, 10);
 
 
     const company = await prisma.company.findFirst({
@@ -84,7 +86,7 @@ class CompanyController {
     const updatedCompany = await prisma.company.update({
       data: {
         name,
-        password,
+        password: newPassword,
         address,
         phone
       },
