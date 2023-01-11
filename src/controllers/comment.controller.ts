@@ -85,6 +85,12 @@ class CommentController {
 
     return res.sendStatus(204);
   }
+
+  public async forgot_password(req: Request, res: Response) {
+    const { email } = req.body;
+  }
 }
+
+
 
 export default CommentController;

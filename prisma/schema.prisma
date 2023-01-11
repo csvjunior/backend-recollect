@@ -25,15 +25,17 @@ model User {
 // postId must have @db.ObjectId to match up with Post's id type
 
 model Company {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  email      String    @unique
-  password   String
-  address    Address
-  phone      Int
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  comments   Comment[]
+  id                   String    @id @default(auto()) @map("_id") @db.ObjectId
+  name                 String
+  email                String    @unique
+  password             String
+  passwordResetToken   String?
+  passwordResetExpires DateTime?
+  address              Address
+  phone                Int
+  created_at           DateTime  @default(now())
+  updated_at           DateTime  @updatedAt
+  comments             Comment[]
 
   @@map("companies")
 }
@@ -44,7 +46,6 @@ type Address {
   state  String
   zip    String
 }
-
 
 model Comment {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -58,4 +59,3 @@ model Comment {
 
   @@map("comments")
 }
- 

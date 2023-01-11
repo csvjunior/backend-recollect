@@ -17,7 +17,7 @@ async function main(): Promise<void> {
   app.use(routes);
 
   app.listen(3000, async () => {
-    console.log(`🚀 Service started and listening at: 3000`);
+    console.log("🚀 Servidor rodando na porta 3000");
   });
 }
 
