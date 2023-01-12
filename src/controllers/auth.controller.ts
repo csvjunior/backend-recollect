@@ -55,13 +55,14 @@ class AuthController {
       const now = new Date();
       now.setHours(now.getHours() + 1);
 
-      const updatedCompany = await prisma.company.update({
+      await prisma.company.update({
         data: {
           passwordResetToken: token,
           passwordResetExpires: now,
         },
         where: { loginEmail },
       });
+
       const options = mailOptions(
         loginEmail,
         "Recuperação de senha",
@@ -87,7 +88,7 @@ class AuthController {
     }
   }
   public async reset_password(req: Request, res: Response) {
-    const { loginEmail, token } = req.body;
+    const { loginEmail, token, password } = req.body;
 
     try {
       const company = await prisma.company.findFirst({
@@ -97,12 +98,24 @@ class AuthController {
         },
       });
       if (!company) return res.status(400).send("Empresa não encontrada.");
-      if (!company.passwordResetExpires)
+
+      if (!company.passwordResetToken || !company.passwordResetExpires)
         return res.status(400).send("Token inválido");
 
       if (company.passwordResetExpires < new Date()) {
         return res.status(400).send("Token expirado");
       }
+
+      const newPassword = bcrypt.hashSync(password, 10);
+
+      await prisma.company.update({
+        data: {
+          password: newPassword,
+        },
+        where: {
+          id: company.id,
+        },
+      });
       return res.status(200).send("Senha atualizada com sucesso");
     } catch (error) {
       res

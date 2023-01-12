@@ -3,42 +3,6 @@ import { Request, Response } from "express";
 import prisma from "../database";
 import express from "express";
 
-const app = express();
-app.use(express.json());
-
-app.post("/", async (req: Request, res: Response) => {
-  const {
-    companyName,
-    site,
-    responsibleName,
-    responsiblePhone,
-    companyEmail,
-    address,
-    phone,
-    typesOfMaterialYouRecycle,
-    removeTheMaterialAtAnotherAddress,
-    loginEmail,
-    password,
-  } = req.body;
-
-  const company = await prisma.company.create({
-    data: {
-      companyName,
-      site,
-      responsibleName,
-      responsiblePhone,
-      companyEmail,
-      address,
-      phone,
-      typesOfMaterialYouRecycle,
-      removeTheMaterialAtAnotherAddress,
-      loginEmail,
-      password,
-    },
-  });
-
-  return res.json(company);
-});
 
 class CompanyController {
   public async index(req: Request, res: Response) {
