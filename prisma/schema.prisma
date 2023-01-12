@@ -25,26 +25,32 @@ model User {
 // postId must have @db.ObjectId to match up with Post's id type
 
 model Company {
-  id                   String    @id @default(auto()) @map("_id") @db.ObjectId
-  name                 String
-  email                String    @unique
-  password             String
-  passwordResetToken   String?
-  passwordResetExpires DateTime?
-  address              Address
-  phone                Int
-  created_at           DateTime  @default(now())
-  updated_at           DateTime  @updatedAt
-  comments             Comment[]
+  id                                String    @id @default(auto()) @map("_id") @db.ObjectId
+  companyName                       String
+  site                              String?
+  responsibleName                   String
+  responsiblePhone                  Int
+  companyEmail                      String    @unique
+  address                           Address
+  phone                             Int
+  typesOfMaterialYouRecycle         String
+  removeTheMaterialAtAnotherAddress String
+  loginEmail                        String    @unique
+  password                          String
+  passwordResetToken                String?
+  passwordResetExpires              DateTime?
+  created_at                        DateTime  @default(now())
+  updated_at                        DateTime  @updatedAt
+  comments                          Comment[]
 
   @@map("companies")
 }
 
 type Address {
   street String
+  zip    String
   city   String
   state  String
-  zip    String
 }
 
 model Comment {
