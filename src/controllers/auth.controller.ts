@@ -8,11 +8,11 @@ import mailOptions, { transport } from "../modules/mailer";
 class AuthController {
   public async login(req: Request, res: Response) {
     try {
-      const { email, password } = req.body;
+      const { loginEmail, password } = req.body;
 
       const company = await prisma.company.findFirst({
         where: {
-          email,
+          loginEmail,
         },
       });
       if (!company) {
@@ -23,7 +23,7 @@ class AuthController {
       if (!bcrypt.compareSync(password, company.password)) {
         return res
           .status(401)
-          .json("Email ou senha inválido, verifique e tente novamente.");
+          .send("Email ou senha inválido, verifique e tente novamente.");
       }
 
       const token = jwt.sign(
@@ -34,21 +34,21 @@ class AuthController {
       );
       return res.json(token);
     } catch (error) {
-      return res.status(500).json("Ocorreu algum problema, contate o suporte.");
+      return res.status(500).send("Ocorreu algum problema, contate o suporte.");
     }
   }
 
   public async forgot_password(req: Request, res: Response) {
-    const { email } = req.body;
+    const { loginEmail } = req.body;
 
     try {
       const company = await prisma.company.findFirst({
         where: {
-          email,
+          loginEmail,
         },
       });
 
-      if (!company) return res.status(400).json("Email não encontrado.");
+      if (!company) return res.status(400).send("Email não encontrado.");
 
       const token = crypto.randomBytes(20).toString("hex");
 
@@ -60,10 +60,10 @@ class AuthController {
           passwordResetToken: token,
           passwordResetExpires: now,
         },
-        where: { email },
+        where: { loginEmail },
       });
       const options = mailOptions(
-        email,
+        loginEmail,
         "Recuperação de senha",
         "forgot_password",
         {
@@ -75,7 +75,7 @@ class AuthController {
         if (error) {
           return res
             .status(400)
-            .json("Email de senha esquecida não pode ser enviado.");
+            .send("Email de senha esquecida não pode ser enviado.");
         }
         return res.json({
           token: token,
@@ -83,27 +83,27 @@ class AuthController {
         });
       });
     } catch (error) {
-      res.status(400).json("Ocorreu algum problema, contate o suporte.");
+      res.status(500).send("Ocorreu algum problema, contate o suporte.");
     }
   }
   public async reset_password(req: Request, res: Response) {
-    const { email, token } = req.body;
+    const { loginEmail, token } = req.body;
 
     try {
       const company = await prisma.company.findFirst({
         where: {
-          email,
+          loginEmail,
           passwordResetToken: token,
         },
       });
-      if (!company) return res.status(400).json("Empresa não encontrada.");
+      if (!company) return res.status(400).send("Empresa não encontrada.");
       if (!company.passwordResetExpires)
-        return res.status(400).json("Token inválido");
+        return res.status(400).send("Token inválido");
 
       if (company.passwordResetExpires < new Date()) {
-        return res.status(400).json("Token expirado");
+        return res.status(400).send("Token expirado");
       }
-      return res.status(200).json("Senha atualizada com sucesso");
+      return res.status(200).send("Senha atualizada com sucesso");
     } catch (error) {
       res
         .status(400)
