@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 import prisma from "../database";
-import express from "express";
 
 
 class CompanyController {
