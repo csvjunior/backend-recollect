@@ -12,4 +12,5 @@ routes.use('/companies', companyRoutes);
 routes.use('/comments', commentRoutes);
 routes.use("/login", authRoutes)
 
+
 export default routes;
