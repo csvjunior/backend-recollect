@@ -2,6 +2,6 @@ import { validate, Joi } from "express-validation";
 
 export = validate({
   params: Joi.object({
-    id: Joi.string().alphanum().length(24).required(),
+    id: Joi.string().pattern(/(^[0-9a-f]{24}$)/).required(),
   }),
 });
