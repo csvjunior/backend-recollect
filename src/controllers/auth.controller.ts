@@ -72,7 +72,7 @@ class AuthController {
         }
       );
 
-      transport.sendMail(options, (error) => {
+      transport.sendMail(options, (error: any) => {
         if (error) {
           return res
             .status(400)
