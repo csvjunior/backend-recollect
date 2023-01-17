@@ -3,6 +3,7 @@ import cors from "cors";
 import * as dotenv from "dotenv";
 import routes from "./routes";
 import handleError = require("./middlewares/handleError");
+import MESSAGE from "./constants/messages";
 
 
 dotenv.config();
@@ -20,7 +21,7 @@ async function main(): Promise<void> {
   app.use(handleError);
 
   app.listen(3000, async () => {
-    console.log("🚀 Servidor rodando na porta 3000");
+    console.log(MESSAGE.SUCCESS.SERVER_RUNNING);
   });
 }
 

@@ -14,6 +14,7 @@ const MESSAGE = {
     PASSWORD_UPDATE: "Senha atualizada com sucesso",
     COMPANY_INDEX: "Empresas recuperadas com sucesso!",
     EMAIL_SEND: "Email enviado com sucesso.",
+    SERVER_RUNNING: "🚀 Servidor rodando na porta 3000",
   },
 };
 
