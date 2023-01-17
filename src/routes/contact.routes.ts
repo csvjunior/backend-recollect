@@ -3,7 +3,7 @@ import ContactController from '../controllers/contact.controller';
 
 const routes = express.Router();
 
-const contactcontroller = new ContactController();
+const contactController = new ContactController();
 
 routes.post('/', contactController.create);
 
