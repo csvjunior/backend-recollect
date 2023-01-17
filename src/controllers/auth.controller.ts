@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import mailOptions, { transport } from "../modules/mailer";
+import MESSAGE from "../constants/messages";
 
 class AuthController {
   public async login(req: Request, res: Response) {
@@ -16,14 +17,10 @@ class AuthController {
         },
       });
       if (!company) {
-        return res
-          .status(401)
-          .json("Email ou senha inválido, verifique e tente novamente.");
+        return res.status(401).json(MESSAGE.ERROR.EMAIL_PASS_INVALID);
       }
       if (!bcrypt.compareSync(password, company.password)) {
-        return res
-          .status(401)
-          .send("Email ou senha inválido, verifique e tente novamente.");
+        return res.status(401).send(MESSAGE.ERROR.EMAIL_PASS_INVALID);
       }
 
       const token = jwt.sign(
@@ -34,7 +31,7 @@ class AuthController {
       );
       return res.json(token);
     } catch (error) {
-      return res.status(500).send("Ocorreu algum problema, contate o suporte.");
+      return res.status(500).send(MESSAGE.ERROR.SERVER_ERROR);
     }
   }
 
@@ -48,7 +45,7 @@ class AuthController {
         },
       });
 
-      if (!company) return res.status(400).send("Email não encontrado.");
+      if (!company) return res.status(400).send(MESSAGE.ERROR.EMAIL_INVALID);
 
       const token = crypto.randomBytes(20).toString("hex");
 
@@ -74,9 +71,7 @@ class AuthController {
 
       transport.sendMail(options, (error: any) => {
         if (error) {
-          return res
-            .status(400)
-            .send("Email de senha esquecida não pode ser enviado.");
+          return res.status(400).send(MESSAGE.ERROR.FORGOT_PASSWORD_CANNOT);
         }
         return res.json({
           token: token,
@@ -84,7 +79,7 @@ class AuthController {
         });
       });
     } catch (error) {
-      res.status(500).send("Ocorreu algum problema, contate o suporte.");
+      res.status(500).send(MESSAGE.ERROR.SERVER_ERROR);
     }
   }
   public async reset_password(req: Request, res: Response) {
@@ -97,13 +92,13 @@ class AuthController {
           passwordResetToken: token,
         },
       });
-      if (!company) return res.status(400).send("Empresa não encontrada.");
+      if (!company) return res.status(400).send(MESSAGE.ERROR.COMPANY_INVALID);
 
       if (!company.passwordResetToken || !company.passwordResetExpires)
-        return res.status(400).send("Token inválido");
+        return res.status(400).send(MESSAGE.ERROR.TOKEN_INVALID);
 
       if (company.passwordResetExpires < new Date()) {
-        return res.status(400).send("Token expirado");
+        return res.status(400).send(MESSAGE.ERROR.TOKEN_EXPIRED);
       }
 
       const newPassword = bcrypt.hashSync(password, 10);
@@ -116,11 +111,9 @@ class AuthController {
           id: company.id,
         },
       });
-      return res.status(200).send("Senha atualizada com sucesso");
+      return res.status(200).send(MESSAGE.SUCCESS.PASSWORD_UPDATE);
     } catch (error) {
-      res
-        .status(400)
-        .json("Não é possível redefinir a senha, tente novamente.");
+      res.status(400).json(MESSAGE.ERROR.RESET_PASSWORD_ERROR);
     }
   }
 }

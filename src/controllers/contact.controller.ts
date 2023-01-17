@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import mailOptions, { transport } from "../modules/mailer";
+import MESSAGE from "../constants/messages";
 
 class ContactController {
   public async create(req: Request, res: Response) {
@@ -27,7 +28,7 @@ class ContactController {
         return res.status(201).send("Email enviado com sucesso.");
       });
     } catch (error) {
-      res.status(500).send("Ocorreu algum problema, contate o suporte.");
+      res.status(500).send(MESSAGE.ERROR.SERVER_ERROR);
     }
   }
 }

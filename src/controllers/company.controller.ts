@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 import prisma from "../database";
-
+import MESSAGE from "../constants/messages";
 
 class CompanyController {
   public async index(req: Request, res: Response) {
