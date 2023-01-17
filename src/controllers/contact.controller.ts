@@ -23,9 +23,9 @@ class ContactController {
         if (error) {
           return res
             .status(400)
-            .send("Falha no envio do email, tente novamente.");
+            .send(MESSAGE.ERROR.EMAIL_SEND_FAILURE);
         }
-        return res.status(201).send("Email enviado com sucesso.");
+        return res.status(201).send(MESSAGE.SUCCESS.EMAIL_SEND);
       });
     } catch (error) {
       res.status(500).send(MESSAGE.ERROR.SERVER_ERROR);

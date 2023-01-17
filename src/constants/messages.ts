@@ -8,9 +8,12 @@ const MESSAGE = {
     TOKEN_INVALID: "Token inválido",
     TOKEN_EXPIRED: "Token expirado",
     RESET_PASSWORD_ERROR: "Não é possível redefinir a senha, tente novamente.",
+    EMAIL_SEND_FAILURE: "Falha no envio do email, tente novamente.",
   },
   SUCCESS: {
     PASSWORD_UPDATE: "Senha atualizada com sucesso",
+    COMPANY_INDEX: "Empresas recuperadas com sucesso!",
+    EMAIL_SEND: "Email enviado com sucesso.",
   },
 };
 
