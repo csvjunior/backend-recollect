@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import prisma from "../database";
 import mailOptions, { transport } from "../modules/mailer";
 
 class ContactController {
