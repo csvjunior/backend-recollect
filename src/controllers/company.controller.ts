@@ -7,9 +7,7 @@ class CompanyController {
   public async index(req: Request, res: Response) {
     const companies = await prisma.company.findMany();
 
-    res
-      .json({ message: "Empresas recuperadas com sucesso!", companies })
-      .status(200);
+    res.json({ message: MESSAGE.SUCCESS.COMPANY_INDEX, companies }).status(200);
   }
 
   public async show(req: Request, res: Response) {
@@ -22,7 +20,7 @@ class CompanyController {
     });
 
     if (!company) {
-      return res.status(404).json({ error: "Empresa não encontrada!" });
+      return res.status(404).json({ error: MESSAGE.ERROR.COMPANY_INVALID });
     }
 
     return res.json(company).status(200);
@@ -122,7 +120,7 @@ class CompanyController {
     });
 
     if (!company) {
-      return res.status(404).json({ error: "Empresa não encontrada!." });
+      return res.status(404).json({ error: MESSAGE.ERROR.COMPANY_INVALID });
     }
 
     await prisma.company.delete({
