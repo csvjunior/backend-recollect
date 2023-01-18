@@ -2,7 +2,8 @@
 
 Repositório com a parte backend do projeto recollect.
 
-Diagrama
+
+Diagrama ER
 
 ```mermaid
 erDiagram
