@@ -7,7 +7,7 @@ Diagrama ER
 
 ```mermaid
 erDiagram
-    Company ||--|| Address: have
+    Company ||--|| Address: has
     Company{
         STRING id
         STRING companyName
