@@ -10,7 +10,7 @@ erDiagram
     Company{
         STRING id
         STRING companyName
-        STRING? site
+        STRING site
         STRING responsibleName
         INT responsiblePhone
         STRING companyEmail
@@ -20,8 +20,8 @@ erDiagram
         STRING removeTheMaterialAtAnotherAddress
         STRING loginEmail
         STRING password
-        STRING? passwordResetToken
-        DATETIME? passwordResetExpires
+        STRING passwordResetToken
+        DATETIME passwordResetExpires
         DATETIME created_at
         DATETIME updated_at
     }
