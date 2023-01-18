@@ -86,7 +86,7 @@ class CompanyController {
 
     if (!company) {
       return res.status(404).json({
-        error: "Empresa não encontrada!",
+        error: MESSAGE.ERROR.COMPANY_INVALID,
       });
     }
 
