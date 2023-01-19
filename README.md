@@ -2,7 +2,6 @@
 
 Repositório com a parte backend do projeto recollect.
 
-
 Diagrama ER
 
 ```mermaid
@@ -31,5 +30,10 @@ erDiagram
         STRING zip
         STRING city
         STRING STATE
+    }
+    Address ||--|| Location: has
+    Location{
+        FLOAT lat
+        FLOAT long
     }
 ```

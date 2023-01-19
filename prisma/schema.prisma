@@ -47,10 +47,16 @@ model Company {
 }
 
 type Address {
-  street String
-  zip    String
-  city   String
-  state  String
+  street   String
+  zip      String
+  city     String
+  state    String
+  location Location
+}
+
+type Location {
+  lat  Float
+  long Float
 }
 
 model Comment {
