@@ -1,9 +1,12 @@
 import bcrypt from "bcryptjs";
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 import prisma from "../database";
+import getLocation from "../modules/geocoder";
 import MESSAGE from "../constants/messages";
 
+
 class CompanyController {
+
   public async index(req: Request, res: Response) {
     const companies = await prisma.company.findMany();
 
@@ -40,7 +43,14 @@ class CompanyController {
       loginEmail,
       password,
     } = req.body;
+
     const newPassword = bcrypt.hashSync(password, 10);
+
+    const location = await getLocation(
+      `${address.street} ${address.zip} ${address.city} ${address.state}`
+    );
+    var addressLocation = address;
+    addressLocation["location"] = location;
 
     const company = await prisma.company.create({
       data: {
@@ -49,7 +59,7 @@ class CompanyController {
         responsibleName,
         responsiblePhone,
         companyEmail,
-        address,
+        address: addressLocation,
         phone,
         typesOfMaterialYouRecycle,
         removeTheMaterialAtAnotherAddress,
@@ -90,6 +100,12 @@ class CompanyController {
       });
     }
 
+    const location = await getLocation(
+      `${address.street} ${address.zip} ${address.city} ${address.state}`
+    );
+    var addressLocation = address;
+    addressLocation["location"] = location;
+
     const updatedCompany = await prisma.company.update({
       data: {
         companyName,
@@ -97,7 +113,7 @@ class CompanyController {
         responsibleName,
         responsiblePhone,
         companyEmail,
-        address,
+        address: addressLocation,
         phone,
         typesOfMaterialYouRecycle,
         removeTheMaterialAtAnotherAddress,

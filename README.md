@@ -34,6 +34,6 @@ erDiagram
     Address ||--|| Location: has
     Location{
         FLOAT lat
-        FLOAT long
+        FLOAT lng
     }
 ```

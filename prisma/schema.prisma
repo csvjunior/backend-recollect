@@ -56,7 +56,7 @@ type Address {
 
 type Location {
   lat  Float
-  long Float
+  lng Float
 }
 
 model Comment {
