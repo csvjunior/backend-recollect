@@ -83,12 +83,11 @@ class AuthController {
     }
   }
   public async reset_password(req: Request, res: Response) {
-    const { loginEmail, token, password } = req.body;
+    const { token, password } = req.body;
 
     try {
       const company = await prisma.company.findFirst({
         where: {
-          loginEmail,
           passwordResetToken: token,
         },
       });

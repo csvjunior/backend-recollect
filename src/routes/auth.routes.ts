@@ -9,7 +9,10 @@ const routes = express.Router();
 const authcontroller = new AuthController();
 
 routes.post("/", authLoginValidation, authcontroller.login);
-routes.post("/forgot_password", authForgotPasswordValidation, authcontroller.forgot_password);
-routes.post("/reset_password", authResetPassword, authcontroller.reset_password);
+routes.post(
+  "/forgot_password",
+  authForgotPasswordValidation,
+  authcontroller.forgot_password
+);
 
 export default routes;

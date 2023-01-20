@@ -4,9 +4,7 @@ import prisma from "../database";
 import getLocation from "../modules/geocoder";
 import MESSAGE from "../constants/messages";
 
-
 class CompanyController {
-
   public async index(req: Request, res: Response) {
     const companies = await prisma.company.findMany();
 
@@ -86,7 +84,12 @@ class CompanyController {
       loginEmail,
       password,
     } = req.body;
-    const newPassword = bcrypt.hashSync(password, 10);
+
+    let newPassword;
+
+    if (password) {
+      newPassword = bcrypt.hashSync(password, 10);
+    }
 
     const company = await prisma.company.findFirst({
       where: {
@@ -106,20 +109,25 @@ class CompanyController {
     var addressLocation = address;
     addressLocation["location"] = location;
 
+    const data = {
+      companyName,
+      site,
+      responsibleName,
+      responsiblePhone,
+      companyEmail,
+      address: addressLocation,
+      phone,
+      typesOfMaterialYouRecycle,
+      removeTheMaterialAtAnotherAddress,
+      loginEmail,
+    };
+
+    if (newPassword) {
+      Object.assign(data, { password: newPassword });
+    }
+
     const updatedCompany = await prisma.company.update({
-      data: {
-        companyName,
-        site,
-        responsibleName,
-        responsiblePhone,
-        companyEmail,
-        address: addressLocation,
-        phone,
-        typesOfMaterialYouRecycle,
-        removeTheMaterialAtAnotherAddress,
-        loginEmail,
-        password,
-      },
+      data,
       where: { id },
     });
 

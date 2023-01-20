@@ -2,7 +2,9 @@ import { validate, Joi } from "express-validation";
 
 export = validate({
   params: Joi.object({
-    id: Joi.string().pattern(/(^[0-9a-f]{24}$)/).required(),
+    id: Joi.string()
+      .pattern(/(^[0-9a-f]{24}$)/)
+      .required(),
   }),
   body: Joi.object({
     companyName: Joi.string().required(),
@@ -22,6 +24,6 @@ export = validate({
     typesOfMaterialYouRecycle: Joi.string(),
     removeTheMaterialAtAnotherAddress: Joi.string(),
     loginEmail: Joi.string().email().required(),
-    password: Joi.string().min(6).required(),
+    password: Joi.string().min(6).allow(null),
   }),
 });
