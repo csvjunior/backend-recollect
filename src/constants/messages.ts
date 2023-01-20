@@ -10,6 +10,7 @@ const MESSAGE = {
     RESET_PASSWORD_ERROR: "Não é possível redefinir a senha, tente novamente.",
     EMAIL_SEND_FAILURE: "Falha no envio do email, tente novamente.",
     GEOCODE_FAILURE: "O geocódigo não foi bem-sucedido pelo seguinte motivo:",
+    INVALID_REQUEST: "Requisição Inválida"
   },
   SUCCESS: {
     PASSWORD_UPDATE: "Senha atualizada com sucesso",

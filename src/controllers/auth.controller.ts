@@ -118,9 +118,7 @@ class AuthController {
   }
   public async change_password(req: Request, res: Response) {
     const { password } = req.body;
-    const companyId = req.params["company"]
-    console.log(req);
-    console.log(companyId);
+    const companyId = req.params["id"]
 
     try {
       const company = await prisma.company.findFirst({

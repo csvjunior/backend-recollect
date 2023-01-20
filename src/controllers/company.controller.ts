@@ -82,14 +82,8 @@ class CompanyController {
       typesOfMaterialYouRecycle,
       removeTheMaterialAtAnotherAddress,
       loginEmail,
-      password,
+      
     } = req.body;
-
-    let newPassword;
-
-    if (password) {
-      newPassword = bcrypt.hashSync(password, 10);
-    }
 
     const company = await prisma.company.findFirst({
       where: {
@@ -121,10 +115,6 @@ class CompanyController {
       removeTheMaterialAtAnotherAddress,
       loginEmail,
     };
-
-    if (newPassword) {
-      Object.assign(data, { password: newPassword });
-    }
 
     const updatedCompany = await prisma.company.update({
       data,
