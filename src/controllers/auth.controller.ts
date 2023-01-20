@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import mailOptions, { transport } from "../modules/mailer";
 import MESSAGE from "../constants/messages";
+import CompanyController from "./company.controller";
 
 class AuthController {
   public async login(req: Request, res: Response) {
@@ -115,6 +116,36 @@ class AuthController {
       res.status(400).json(MESSAGE.ERROR.RESET_PASSWORD_ERROR);
     }
   }
+  public async change_password(req: Request, res: Response) {
+    const { password } = req.body;
+    const companyId = req.params["company"]
+    console.log(req);
+    console.log(companyId);
+
+    try {
+      const company = await prisma.company.findFirst({
+        where: {
+          id: companyId
+        },
+      });
+      if (!company) return res.status(400).send(MESSAGE.ERROR.COMPANY_INVALID);
+
+      const newPassword = bcrypt.hashSync(password, 10);
+
+      await prisma.company.update({
+        data: {
+          password: newPassword,
+        },
+        where: {
+          id: company.id,
+        },
+      });
+      return res.status(200).send(MESSAGE.SUCCESS.PASSWORD_UPDATE);
+    } catch (error) {
+      res.status(400).json(MESSAGE.ERROR.RESET_PASSWORD_ERROR);
+    }
+  }
 }
+
 
 export default AuthController;

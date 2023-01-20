@@ -2,16 +2,14 @@ import express from "express";
 import cors from "cors";
 import * as dotenv from "dotenv";
 import routes from "./routes";
-import handleError = require("./middlewares/handleError");
+import handleError from "./middlewares/handleError";
 import MESSAGE from "./constants/messages";
-
+import auth from "./middlewares/auth";
 
 dotenv.config();
 
 async function main(): Promise<void> {
-
   const app = express();
-  
 
   app.use(cors());
   app.use(express.json());
@@ -25,10 +23,7 @@ async function main(): Promise<void> {
   });
 }
 
-main()
-    .catch(async (e) => {
-
-        console.error(e)
-        process.exit(1)
-
-    })
+main().catch(async (e) => {
+  console.error(e);
+  process.exit(1);
+});
